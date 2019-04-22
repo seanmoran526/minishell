@@ -59,14 +59,23 @@ void readCommand(char *);
 int main(int argc, char *argv[]) {
    int pid;
    int status;
+   int i, chpid;
    char cmdLine[MAX_LINE_LEN];
    struct command_t command;
+   char args[1][1];
+   args[0][0] = ’\0’;
+   
 
    while (TRUE) {
       printPrompt();
       /* Read the command line and parse it */
       readCommand(cmdLine);
-      ...
+      while(strcmp(cmdLine, "\n"))
+      {
+         printf("\n");
+         printPrompt();
+         readCommand(cmdLine);
+      }
       parseCommand(cmdLine, &command);
       ...
       command.argv[command.argc] = NULL;
@@ -125,7 +134,7 @@ void printPrompt() {
    /* Build the prompt string to have the machine name,
     * current directory, or other desired information
     */
-   promptString = ...;
+   promptString = "linux(smm368):  ";
    printf("%s ", promptString);
 }
 
